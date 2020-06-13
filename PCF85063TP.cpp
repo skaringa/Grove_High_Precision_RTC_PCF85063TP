@@ -124,8 +124,8 @@ void PCD85063TP::reset() {
      mode = 0, calibrate every 2 hours
      mode = 1, calibrate every 4 minutes
      offset_sec, offset value of one second.
-     If the RTC time too fast: offset_sec < 0
-     If the RTC time too slow: offset_sec > 0
+     If the RTC time too fast: offset_sec > 0
+     If the RTC time too slow: offset_sec < 0
 */
 uint8_t PCD85063TP::calibratBySeconds(int mode, float offset_sec) {
     float Fmeas = 32768.0 + offset_sec * 32768.0;
@@ -142,7 +142,7 @@ uint8_t PCD85063TP::calibratBySeconds(int mode, float offset_sec) {
 void PCD85063TP::setcalibration(int mode, float Fmeas) {
     float offset = 0;
     float Tmeas = 1.0 / Fmeas;
-    float Dmeas = 1.0 / 32768 - Tmeas;
+    float Dmeas = 1.0 / 32768.0 - Tmeas;
     float Eppm = 1000000.0 * Dmeas / Tmeas;
     if (mode == 0) {
         offset = Eppm / 4.34;
@@ -150,7 +150,7 @@ void PCD85063TP::setcalibration(int mode, float Fmeas) {
         offset = Eppm / 4.069;
     }
 
-    uint8_t data = (mode << 7) & 0x80 | ((int)(offset + 0.5) & 0x7f);
+    uint8_t data = (mode << 7) & 0x80 | (round(offset) & 0x7f);
     writeReg(PCD85063TP_OFFSET, data);
 }
 
