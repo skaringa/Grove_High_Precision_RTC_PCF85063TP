@@ -3,9 +3,9 @@
 //  Hardware: Grove - RTC v2.0
 //  Arduino IDE: Arduino-1.6.6
 //  Author:   FrankieChu
-//  Date:    June 14,2016
-//  Version: v1.0
-//  by www.seeedstudio.com
+//  Date:    June 14,2020
+//  Version: v1.1
+//  by www.seeedstudio.com, skaringa
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Lesser General Public
@@ -157,6 +157,26 @@ void PCD85063TP::setcalibration(int mode, float Fmeas) {
 
 uint8_t PCD85063TP::readCalibrationReg(void) {
     return readReg(PCD85063TP_OFFSET);
+}
+
+uint8_t PCD85063TP::setInterrupt(bool MI, bool HMI) {
+    uint8_t data = readReg(REG_CTRL2);
+    if (MI) {
+        data = data | 0b100000;
+    } else {
+        data = data & 0b011111;
+    }
+    if (HMI) {
+        data = data | 0b010000;
+    } else {
+        data = data & 0b101111;
+    }
+    writeReg(REG_CTRL2, data);
+    return readReg(REG_CTRL2);
+}
+
+uint8_t PCD85063TP::readInterruptReg() {
+    return readReg(REG_CTRL2);
 }
 
 

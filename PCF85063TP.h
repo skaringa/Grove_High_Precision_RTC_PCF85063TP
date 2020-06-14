@@ -3,9 +3,9 @@
 //  Hardware: Grove - RTC v2.0
 //  Arduino IDE: Arduino-1.6.6
 //  Author:   FrankieChu
-//  Date:    June 14,2016
-//  Version: v1.0
-//  by www.seeedstudio.com
+//  Date:    June 14,2020
+//  Version: v1.1
+//  by www.seeedstudio.com, skaringa
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Lesser General Public
@@ -67,6 +67,8 @@ class PCD85063TP {
     void setcalibration(int mode, float Fmeas);
     uint8_t calibratBySeconds(int mode, float offset_sec);
     uint8_t readCalibrationReg(void);
+    uint8_t setInterrupt(bool MI, bool HMI);
+    uint8_t readInterruptReg();
     uint8_t cap_sel(uint8_t value);
     void reset();
     void fillByHMS(uint8_t _hour, uint8_t _minute, uint8_t _second);

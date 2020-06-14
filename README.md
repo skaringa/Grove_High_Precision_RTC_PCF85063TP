@@ -1,4 +1,4 @@
-# Grove - High Precision RTC_PCF85063TP  [![Build Status](https://travis-ci.com/Seeed-Studio/Grove_High_Precision_RTC_PCF85063TP.svg?branch=master)](https://travis-ci.com/Seeed-Studio/Grove_High_Precision_RTC_PCF85063TP)
+# Grove - High Precision RTC_PCF85063TP 
 Grove - High Precision RTC is based on PCD85063TP, it's usage is almost the same with ds1307.
 
 <img src=https://statics3.seeedstudio.com/seeed/img/2016-11/1GtDOEsSVtk0i3pa5JBXOSTb.jpg width=300><img src=https://statics3.seeedstudio.com/seeed/img/2016-11/brK2Tu9LnaVBztZnmbP8x0we.jpg width=300>
@@ -9,20 +9,26 @@ Grove - High Precision RTC based on the clock chip PCF85063TP which is a CMOS Re
 
 For more information please visit [wiki page](http://wiki.seeedstudio.com/Grove_High_Precision_RTC/).
 
+This is an extended version that fixes some bugs and adds the ability to control the interrupts sent by the PCF85063TP.
+
 ## Methods
 
 * void startClock(void);
 * void stopClock(void);
 * void setTime(void);
 * void getTime(void);
-* void setcalibration(int mode, float Fmeas);  <br>
-  - mode 0 - offset is made once every 2 hours <br>
-  - mode 1 - offset is made once every 4 minutes <br>
-  - Fmeas - real clock frequency you detcet <br><br>
-* uint8_t readCalibrationReg(void); <br>
-  - Read offset register at 0x02 <br><br>
+* void setcalibration(int mode, float Fmeas);
+  - mode 0 - offset is made once every 2 hours
+  - mode 1 - offset is made once every 4 minutes
+  - Fmeas - real clock frequency you detcet
+* uint8_t readCalibrationReg(void);
+  - read offset register at 0x02
 * uint8_t calibratBySeconds(int mode, float offset_sec);
   - offset_sec - need a long time running RTC and work out the offset by one second 
+* uint8_t setInterrupt(bool MI, bool HMI);
+  - enable or disable the minute (MI) or half-minute (HMI) interrupt
+* uint8_t readInterruptReg();
+  - read register Control_2 at 0x01
 * void reset();
 * void fillByHMS(uint8_t _hour, uint8_t _minute, uint8_t _second);
 * void fillByYMD(uint16_t _year, uint8_t _month, uint8_t _day);
